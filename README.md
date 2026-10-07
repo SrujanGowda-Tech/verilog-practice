@@ -1,7 +1,7 @@
 # Verilog Practice
 
-Learning digital design and Verilog as I prepare for a career in VLSI / semiconductors.
-Roadmap: Oct 2026 to May 2027. Target: digital design / verification roles.
+Learning digital design and Verilog as I prepare for a career in _VLSI / semiconductors.
+Roadmap_: Oct 2026 to May 2027. Target: digital design / verification roles.
 
 ## Oct: Digital basics + Verilog
 - [x] GitHub setup
