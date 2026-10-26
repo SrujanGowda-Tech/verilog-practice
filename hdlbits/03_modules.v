@@ -95,3 +95,65 @@ module add1 ( input a, input b, input cin, output sum, output cout );
     assign cout = a&b | a&cin | b&cin;
 
 endmodule
+//Module cseladd
+module top_module(
+    input [31:0] a,
+    input [31:0] b,
+    output [31:0] sum
+);
+    wire [15:0] sum_low;
+    wire [15:0] sum_high0, sum_high1;
+    wire carry_low, carry_high0, carry_high1;
+
+    add16 u1 (
+        .a(a[15:0]),
+        .b(b[15:0]),
+        .cin(1'b0),
+        .sum(sum_low),
+        .cout(carry_low)
+    );
+    add16 u2 (
+        .a(a[31:16]),
+        .b(b[31:16]),
+        .cin(1'b0),
+        .sum(sum_high0),
+        .cout(carry_high0)
+    );
+    add16 u3 (
+        .a(a[31:16]),
+        .b(b[31:16]),
+        .cin(1'b1),
+        .sum(sum_high1),
+        .cout(carry_high1)
+    );
+    assign sum[15:0]  = sum_low;
+    assign sum[31:16] = carry_low ? sum_high1 : sum_high0;
+
+endmodule
+//Module addsub
+module top_module(
+    input [31:0] a,
+    input [31:0] b,
+    input sub,
+    output [31:0] sum
+);
+
+    wire [31:0] b_mod;
+    wire carry;
+    assign b_mod = b ^ {32{sub}};
+    add16 u1 (
+        .a(a[15:0]),
+        .b(b_mod[15:0]),
+        .cin(sub),
+        .sum(sum[15:0]),
+        .cout(carry)
+    );
+    add16 u2 (
+        .a(a[31:16]),
+        .b(b_mod[31:16]),
+        .cin(carry),
+        .sum(sum[31:16]),
+        .cout()
+    );
+
+endmodule
